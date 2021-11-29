@@ -807,6 +807,36 @@
             QUAD_ROOT, # ∜
         end_unicode_ops,
     end_ops,
+
+    # Nonterminals which are exposed in the AST
+    #
+    # These nonterminals have surface syntax, but the surface syntax itself
+    # doesn't include the nonterminal name.
+    begin_syntax_kinds,
+        BLOCK,
+        CALL,
+        COMPARISON,
+        CURLY,
+        STRING_INTERP,   # "a $x"
+        TOPLEVEL,
+        TUPLE,
+        REF,
+        VECT,
+        # Concatenation syntax
+        BRACES,
+        BRACESCAT,
+        HCAT,
+        VCAT,
+        NCAT,
+        TYPED_HCAT,
+        TYPED_VCAT,
+        TYPED_NCAT,
+        # Comprehensions
+        GENERATOR,
+        FLATTEN,
+        COMPREHENSION,
+        TYPED_COMPREHENSION,
+    end_syntax_kinds,
 )
 
 
