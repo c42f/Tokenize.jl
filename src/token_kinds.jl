@@ -807,6 +807,30 @@
         end_unicode_ops,
     end_ops,
 
+    # In some cases we want to generate parse tree nodes in a standard form,
+    # but some of the leaf tokens are implied rather than existing in the
+    # source text. Some examples:
+    #
+    # Implicit multiplication - the * is invisible
+    #   2x  ==>  (call * 2 x)
+    #
+    # Docstrings - the macro name is invisible
+    #   "doc" foo() = 1   ==>  (macrocall (core @doc) . (= (call foo) 1))
+    #
+    # Big integer literals - again, an invisible macro name
+    #   11111111111111111111 ==> (macrocall (core @int128_str) . 11111111111111111111)
+    #
+    # In these cases, we use some special kinds which can be emitted as zero
+    # width tokens to keep the parse tree more uniform.
+    begin_invisible_tokens,
+        TOMBSTONE,           # Empty placeholder for kind to be filled later
+        CORE_AT_DOC,         # Core.@doc
+        CORE_AT_CMD,         # Core.@cmd
+        CORE_AT_INT128_STR,  # Core.@int128_str
+        CORE_AT_UINT128_STR, # Core.@uint128_str
+        CORE_AT_BIG_STR,     # Core.@big_str
+    end_invisible_tokens,
+
     # Nonterminals which are exposed in the AST
     #
     # These nonterminals have surface syntax, but the surface syntax itself
