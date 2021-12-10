@@ -821,6 +821,7 @@
         TUPLE,
         REF,
         VECT,
+        MACROCALL,
         # Concatenation syntax
         BRACES,
         BRACESCAT,
