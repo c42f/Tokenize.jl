@@ -829,6 +829,7 @@
         CORE_AT_INT128_STR,  # Core.@int128_str
         CORE_AT_UINT128_STR, # Core.@uint128_str
         CORE_AT_BIG_STR,     # Core.@big_str
+        __DOT__,             # The macro name of `@.`
     end_invisible_tokens,
 
     # Nonterminals which are exposed in the AST
@@ -846,6 +847,8 @@
         REF,
         VECT,
         MACROCALL,
+        KW,             # the = in f(a=1)
+        PARAMETERS,     # the list after ; in f(; a=1)
         # Concatenation syntax
         BRACES,
         BRACESCAT,
