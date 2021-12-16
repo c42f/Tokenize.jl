@@ -400,7 +400,9 @@ function lex_whitespace(l::Lexer, c)
         if c == '\n'
             k = Tokens.NEWLINE_WS
         end
-        if !iswhitespace(peekchar(l))
+        pc = peekchar(l)
+        # stop on non whitespace and limit to a single newline in a token
+        if !iswhitespace(pc) || (k == Tokens.NEWLINE_WS && pc == '\n')
             break
         end
         c = readchar(l)
