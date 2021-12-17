@@ -807,35 +807,40 @@
         end_unicode_ops,
     end_ops,
 
+    # Kinds emitted by the parser. There's two types of these:
+    # 1. Implied tokens which have a position but might have zero width in the
+    #    source text.
+    #
     # In some cases we want to generate parse tree nodes in a standard form,
     # but some of the leaf tokens are implied rather than existing in the
-    # source text. Some examples:
+    # source text, or the lexed tokens need to be re-kinded to represent
+    # special forms which only the parser can infer. These are "parser tokens".
     #
-    # Implicit multiplication - the * is invisible
-    #   2x  ==>  (call * 2 x)
+    # Some examples:
     #
     # Docstrings - the macro name is invisible
     #   "doc" foo() = 1   ==>  (macrocall (core @doc) . (= (call foo) 1))
     #
-    # Big integer literals - again, an invisible macro name
-    #   11111111111111111111 ==> (macrocall (core @int128_str) . 11111111111111111111)
+    # String macros - the macro name does not appear in the source text, so we
+    # need a special kind of token to imply it.
     #
     # In these cases, we use some special kinds which can be emitted as zero
     # width tokens to keep the parse tree more uniform.
-    begin_invisible_tokens,
+    begin_parser_tokens,
         TOMBSTONE,           # Empty placeholder for kind to be filled later
         CORE_AT_DOC,         # Core.@doc
         CORE_AT_CMD,         # Core.@cmd
         CORE_AT_INT128_STR,  # Core.@int128_str
         CORE_AT_UINT128_STR, # Core.@uint128_str
         CORE_AT_BIG_STR,     # Core.@big_str
-        __DOT__,             # The macro name of `@.`
-    end_invisible_tokens,
+        DOT_MACRO_NAME,      # The macro name of @.
+        STRING_MACRO_NAME,   # macname"some_str"
+        CMD_MACRO_NAME,      # macname`some_str`
+        UNQUOTED_STRING,     # Represent an unquoted symbol in the source, as a string
+    end_parser_tokens,
 
-    # Nonterminals which are exposed in the AST
-    #
-    # These nonterminals have surface syntax, but the surface syntax itself
-    # doesn't include the nonterminal name.
+    # 2. Nonterminals which are exposed in the AST, but where the surface
+    #    syntax doesn't have a token corresponding to the node type.
     begin_syntax_kinds,
         BLOCK,
         CALL,
