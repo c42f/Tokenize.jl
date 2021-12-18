@@ -846,6 +846,7 @@
         CALL,
         COMPARISON,
         CURLY,
+        INERT,           # QuoteNode; not quasiquote
         STRING_INTERP,   # "a $x"
         TOPLEVEL,
         TUPLE,
