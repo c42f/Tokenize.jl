@@ -837,6 +837,7 @@
         STRING_MACRO_NAME,   # macname"some_str"
         CMD_MACRO_NAME,      # macname`some_str`
         UNQUOTED_STRING,     # Represent an unquoted symbol in the source, as a string
+        NOTHING_LITERAL,     # Represent a Julia `nothing`
     end_parser_tokens,
 
     # 2. Nonterminals which are exposed in the AST, but where the surface
