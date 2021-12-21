@@ -828,16 +828,25 @@
     # width tokens to keep the parse tree more uniform.
     begin_parser_tokens,
         TOMBSTONE,           # Empty placeholder for kind to be filled later
-        CORE_AT_DOC,         # Core.@doc
-        CORE_AT_CMD,         # Core.@cmd
-        CORE_AT_INT128_STR,  # Core.@int128_str
-        CORE_AT_UINT128_STR, # Core.@uint128_str
-        CORE_AT_BIG_STR,     # Core.@big_str
-        DOT_MACRO_NAME,      # The macro name of @.
-        STRING_MACRO_NAME,   # macname"some_str"
-        CMD_MACRO_NAME,      # macname`some_str`
-        UNQUOTED_STRING,     # Represent an unquoted symbol in the source, as a string
-        NOTHING_LITERAL,     # Represent a Julia `nothing`
+        NOTHING_LITERAL,     # A literal Julia `nothing` in the AST
+        UNQUOTED_STRING,     # An unquoted range of the source as a string
+
+        # Macro names are modelled as a special kind of identifier because the
+        # @ may not be attached to the macro name in the source (or may not be
+        # associated with a token at all in the case of implied macro calls
+        # like CORE_DOC_MACRO_NAME)
+        begin_macro_names,
+            MACRO_NAME,                  # A macro name identifier
+            VAR_MACRO_NAME,              # @var"..."
+            STRING_MACRO_NAME,           # macname"some_str"
+            CMD_MACRO_NAME,              # macname`some_str`
+            DOT_MACRO_NAME,              # The macro name of @.
+            CORE_DOC_MACRO_NAME,         # Core.@doc
+            CORE_CMD_MACRO_NAME,         # Core.@cmd
+            CORE_INT128_STR_MACRO_NAME,  # Core.@int128_str
+            CORE_UINT128_STR_MACRO_NAME, # Core.@uint128_str
+            CORE_BIG_STR_MACRO_NAME,     # Core.@big_str
+        end_macro_names,
     end_parser_tokens,
 
     # 2. Nonterminals which are exposed in the AST, but where the surface
