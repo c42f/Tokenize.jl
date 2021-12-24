@@ -874,8 +874,10 @@
         TYPED_HCAT,
         TYPED_VCAT,
         TYPED_NCAT,
+        ROW,
         # Comprehensions
         GENERATOR,
+        FILTER,
         FLATTEN,
         COMPREHENSION,
         TYPED_COMPREHENSION,
