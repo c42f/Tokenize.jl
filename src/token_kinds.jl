@@ -875,6 +875,7 @@
         TYPED_VCAT,
         TYPED_NCAT,
         ROW,
+        NROW,
         # Comprehensions
         GENERATOR,
         FILTER,
